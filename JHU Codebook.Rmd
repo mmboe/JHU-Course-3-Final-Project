@@ -8,9 +8,17 @@ CodeBook
 
 Project Overview and Description: 
 
-In this assignment, data was collected from 30 subjects (aged 19 – 48) who wore sensors while doing various activities with their smartphone app on a Samsung smartphone. These six activities including walking, walking both up and downstairs, sitting, standing and laying. Using the phone app’s embedded accelerometer and gyroscope,  3-axial (x,y,z axes) linear acceleration and 3-axial (x,y,z axes) angular velocity readings were captured at a constant rate of 50Hz.  A vector of features was obtained by calculating variables from the time and frequency domain contained in a file with 561 different features (features_info.txt file). The dataset was randomly split into two sets, a training set where 70% of the subjects participated and a test set, where 30% of the participants generated the test data.
+In this assignment, data was collected from 30 subjects (aged 19 – 48) who wore sensors while doing various activities 
+with their smartphone app on a Samsung smartphone. These six activities including walking, walking both up and downstairs, 
+sitting, standing and laying. Using the phone app’s embedded accelerometer and gyroscope,  3-axial (x,y,z axes) linear 
+acceleration and 3-axial (x,y,z axes) angular velocity readings were captured at a constant rate of 50Hz.  A vector of 
+features was obtained by calculating variables from the time and frequency domain contained in a file with 561 different 
+features (features_info.txt file). The dataset was randomly split into two sets, a training set where 70% of the subjects 
+participated and a test set, where 30% of the participants generated the test data.
 
-The goal of this project is to merge several datasets containing the raw data (from both the training and test data from the Samsung app measurements taken from the 30 subjects) and convert them into  a tidy data set for further analysis. The data set was obtained from :
+The goal of this project is to merge several datasets containing the raw data (from both the training and test data from 
+the Samsung app measurements taken from the 30 subjects) and convert them into  a tidy data set for further analysis. 
+The data set was obtained from :
 
  "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
 
@@ -22,7 +30,8 @@ These are the raw data files that were downloaded into a text editor (Notepad ++
 
 - 'features.txt': List of all features or the types of measurements taken. There were 561 features.
 
-- 'activity_labels.txt': Links the class labels with their activity name. (6 different activities corresponding to numbers, i.e. 1 = walking, 2 = walking upstairs, 3 = walking downstairs, 4 = sitting,  5 = standing, 6 = laying)
+- 'activity_labels.txt': Links the class labels with their activity name. (6 different activities corresponding to numbers, 
+- i.e. 1 = walking, 2 = walking upstairs, 3 = walking downstairs, 4 = sitting,  5 = standing, 6 = laying)
 
 - 'train/X_train.txt': Training set data (contains 7352 measurements of the 561 features variables)
 
@@ -34,7 +43,8 @@ These are the raw data files that were downloaded into a text editor (Notepad ++
 
  More specifically the assignment called for performance of the following tasks: 
 
-1.	Merge the three training sets (Xtrain, subject train, Ytrain) and the three test sets (Xtest, subtest, Ytest) and create one large data set that contained 10299 observations with 563 variables (Subject ID, Activity, and the 561 features variables)
+1.	Merge the three training sets (Xtrain, subject train, Ytrain) and the three test sets (Xtest, subtest, Ytest) and 
+2.	create one large data set that contained 10299 observations with 563 variables (Subject ID, Activity, and the 561 features variables)
 
 The feature variables were composed of Time and Frequency Domain Signals:
 
@@ -60,13 +70,17 @@ Frequency
     fBodyGyroJerkMag
 
 
-2.	Extract only the measurements for the mean and standard deviation for each measurement to create a smaller dataset. (In other words, only those variables that indicated a mean() or a standard deviation sd() in the column name were extracted yielding a dataset with just 68 variables or 66 feature variables.)
+2.	Extract only the measurements for the mean and standard deviation for each measurement to create a smaller dataset. 
+3.	(In other words, only those variables that indicated a mean() or a standard deviation sd() in the column name were 
+4.	extracted yielding a dataset with just 68 variables or 66 feature variables.)
 
 3.	Use descriptive activity names to name the activities in the data set (Replaced numbers 1 – 6 with the actual activities: walking, etc.)
 
-4.	Label the data set with more descriptive variable names. (For example, replace “t” and “f” to represent time and freq. and eliminate unnecessary parentheses in variable names.)
+4.	Label the data set with more descriptive variable names. (For example, replace “t” and “f” to represent time and 
+5.	freq. and eliminate unnecessary parentheses in variable names.)
 
-5.	Create a tidy data set containing the averages or means of the mean and standard deviations variables for each activity and for each of the 30 subjects. This yielded a data set with 180 observations with 68 variables.
+5.	Create a tidy data set containing the averages or means of the mean and standard deviations variables for each 
+6.	activity and for each of the 30 subjects. This yielded a data set with 180 observations with 68 variables.
 
 6.	Save the dataset to a tidied text file.
 
@@ -74,29 +88,8 @@ Source:
 
 Jorge L. Reyes-Ortiz(1,2), Davide Anguita(1), Alessandro Ghio(1), Luca Oneto(1) and Xavier Parra(2)
 1 - Smartlab - Non-Linear Complex Systems Laboratory DITEN - Università degli Studi di Genova, Genoa (I-16145), Italy.
-2 - CETpD - Technical Research Centre for Dependency Care and Autonomous Living Universitat Politècnica de Catalunya (BarcelonaTech). Vilanova i la Geltrú (08800), Spain activityrecognition '@' smartlab.ws 
+2 - CETpD - Technical Research Centre for Dependency Care and Autonomous Living Universitat Politècnica de Catalunya 
+(BarcelonaTech). Vilanova i la Geltrú (08800), Spain activityrecognition '@' smartlab.ws 
 
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
 ```
-
-## R Markdown
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
-```
-
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
