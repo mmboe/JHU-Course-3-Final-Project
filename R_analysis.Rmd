@@ -1,0 +1,119 @@
+---
+title: "McAndrew Final Project JHU Course 3 R Notebook"
+output: html_notebook
+---
+```{r}
+install.packages("readr")
+library(readr)
+install.packages("dplyr")
+library(dplyr)
+install.packages("stringr")
+library(stringr)
+```{r}
+Xtrain <- read.table("C:/Users/maure/Documents/R/UCI HAR Dataset/train/X_train.txt")
+Ytrain <- read.table("C:/Users/maure/Documents/R/UCI HAR Dataset/train/Y_train.txt")
+Subtrain <- read.table("C:/Users/maure/Documents/R/UCI HAR Dataset/train/subject_train.txt")
+Xtest <- read.table("C:/Users/maure/Documents/R/UCI HAR Dataset/test/X_test.txt")
+Yest <- read.table("C:/Users/maure/Documents/R/UCI HAR Dataset/test/Y_test.txt")
+subtest <- read.table("C:/Users/maure/Documents/R/names(subtest)[names(subtest) == "V1"] <- "Subject ID"UCI HAR Dataset/test/subject_test.txt")
+features <- read.table("C:/Users/maure/Documents/R/UCI HAR Dataset/features.txt")
+activities <- read.table("C:/Users/maure/Documents/R/UCI HAR Dataset/activity_labels.txt")
+
+```
+#Combine test files
+# First rename V1 columns in subtest and Ytest to avoid multiple columns with same name (V1) in combined dataset
+```{r}names(subtest)[names(subtest) == "V1"] <- "Subject ID"
+      names(Ytest)[names(Ytest) == "V1"] <- "Activity"
+```
+#Combine the three test datasets (subtest, Ytest, and Xtest) into a new dataset called Test.
+```{r}
+Test <- cbind(subtest, Ytest, Xtest)
+```
+#Combine train files
+# First rename V1 columns in subtrain and Ytrain to avoid multiple columns with same name(V1) in combined dataset
+
+```{r}
+names(Subtrain)[names(Subtrain) == "V1"] <- "Subject ID"
+names(Ytrain)[names(Ytrain) == "V1"] <- "Activity"
+```
+#Combinbe the three train datasets (Subtrain, Ytrain, and Xtrain) into a new
+dataset called Train.
+
+```
+```{r}
+Train <- cbind(Subtrain, Ytrain, Xtrain)
+```
+#Combine test and train datasets
+```{r}
+Testtrain <- rbind(Test, Train)
+```
+#Rename columns in Testtrain with Feature names
+#First remove (temporarily) the Subject ID and Activity variables to create a new data set to rename all variables and call in Justvars.
+```{r}
+Justvars <- Testtrain %>% select(-`Subject ID`, Activity)
+```
+#Create a new dataset with Subject ID and Activity variables to merge after other variables are renamed with features
+```{r}
+Twovars <- Testtrain %>% select(`Subject ID`, Activity)
+```
+#Rename variables in Justvars with features file
+```{r}
+Justvars <- setNames(Justvars, features$V2)
+```
+#Combine Justvars and Twovars into new dataset called Testtrain1
+```{r}
+Testtrain1 <- cbind(Twovars, Justvars)
+```
+#Select only those columns for mean() and standard deviation or sd() and create a new dataset called meanstd
+```{r}
+meanstd <- Testtrain1 %>%
+  select(SubjectID, Activity, contains("mean()") | contains("std()"))
+```
+#Add descriptive activity names to rename the numbers corresponding to activities in the Activity column. But first change class to factor and then create a vector of the activities for input into big dataset (Testtrain1).
+```{r}
+meanstd$Activity <- as.factor(meanstd$Activity)
+newmeanstd <- str_replace_all(meanstd$Activity, c("1" = "walking", 
+    "2" = "walkingupstairs", "3" = "walkingdownstairs","4" = "sitting",
+    "5" = "standing", "6" = "laying"))
+```
+Replace numbered variable for Activity with descriptive names and create new dataset finalmeanstd.
+First, create a new data frame (newact) from the new vector (newmeanstd) that contains the descriptive names of the numbered activities.
+```{r}
+newact <- as.data.frame(newmeanstd)
+```
+Change (mutate) the Activity column with the descriptive names in the main dataset that is renamed finalmeanstd
+
+```{r}
+finalmeanstd <- meanstd %>% mutate(Activity = newact$newmeanstd)
+```
+# Replace variable abbreviations (t, f) to represent (time, freq) and eliminated unneeded ().
+```{r}
+names(finalmeanstd) <- gsub(x = names(finalmeanstd), pattern = "^t", replacement = "time")
+names(finalmeanstd) <- gsub(x = names(finalmeanstd), pattern = "^f", replacement = "freq")
+names(finalmeanstd) <- gsub(x = names(finalmeanstd), pattern = "\\(", replacement = "")
+names(finalmeanstd) <- gsub(x = names(finalmeanstd), pattern = "\\)", replacement = "")
+```
+#For each of the 30 subjects and for each of the 6 activities, calculate the mean of each unique measure of the mean() and std() variables. Save in a dataset called md
+```{r}
+md <- finalmeanstd %>%
++     group_by(`Subject ID`, Activity) %>%
++     summarize_all(list(mean))
+```
+# Save tidied dataset (md) to text file.
+```{r}
+write.table(md, file = "C:/Users/maure/Documents/R/JHU March/tidied.txt")
+```
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+```{r}
+plot(cars)
+```
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
