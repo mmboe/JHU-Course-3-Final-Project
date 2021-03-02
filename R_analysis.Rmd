@@ -48,7 +48,8 @@ Train <- cbind(Subtrain, Ytrain, Xtrain)
 Testtrain <- rbind(Test, Train)
 ```
 #Rename columns in Testtrain with Feature names
-#First remove (temporarily) the Subject ID and Activity variables to create a new data set to rename all variables and call in Justvars.
+#First remove (temporarily) the Subject ID and Activity variables to create a new data set 
+to rename all variables and call in Justvars.
 ```{r}
 Justvars <- Testtrain %>% select(-`Subject ID`, Activity)
 ```
@@ -69,7 +70,8 @@ Testtrain1 <- cbind(Twovars, Justvars)
 meanstd <- Testtrain1 %>%
   select(SubjectID, Activity, contains("mean()") | contains("std()"))
 ```
-#Add descriptive activity names to rename the numbers corresponding to activities in the Activity column. But first change class to factor and then create a vector of the activities for input into big dataset (Testtrain1).
+#Add descriptive activity names to rename the numbers corresponding to activities in the Activity column. 
+But first change class to factor and then create a vector of the activities for input into big dataset (Testtrain1).
 ```{r}
 meanstd$Activity <- as.factor(meanstd$Activity)
 newmeanstd <- str_replace_all(meanstd$Activity, c("1" = "walking", 
@@ -93,7 +95,8 @@ names(finalmeanstd) <- gsub(x = names(finalmeanstd), pattern = "^f", replacement
 names(finalmeanstd) <- gsub(x = names(finalmeanstd), pattern = "\\(", replacement = "")
 names(finalmeanstd) <- gsub(x = names(finalmeanstd), pattern = "\\)", replacement = "")
 ```
-#For each of the 30 subjects and for each of the 6 activities, calculate the mean of each unique measure of the mean() and std() variables. Save in a dataset called md
+#For each of the 30 subjects and for each of the 6 activities, calculate the mean of each unique measure 
+of the mean() and std() variables. Save in a dataset called md
 ```{r}
 md <- finalmeanstd %>%
 +     group_by(`Subject ID`, Activity) %>%
@@ -104,16 +107,6 @@ md <- finalmeanstd %>%
 write.table(md, file = "C:/Users/maure/Documents/R/JHU March/tidied.txt")
 ```
 
-This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
 
-Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
 
-```{r}
-plot(cars)
-```
 
-Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
-
-When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
-
-The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
