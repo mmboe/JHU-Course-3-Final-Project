@@ -1,6 +1,9 @@
 Title: JHU Course 3 “Getting and Cleaning Data” Final Project
 
-In this assignment, data was collected from 30 subjects (aged 19 – 48) who wore sensors while doing various physical activities with their smartphone app on a Samsung smartphone. The goal of this project is to merge several datasets containing the raw data from the measurements taken from the Samsung app from the 30 subjects and convert them into  a tidy data set for further analysis. 
+In this assignment, data was collected from 30 subjects (aged 19 – 48) who wore sensors while doing various 
+physical activities with their smartphone app on a Samsung smartphone. The goal of this project is to merge several datasets 
+containing the raw data from the measurements taken from the Samsung app from the 30 subjects and convert them into  
+a tidy data set for further analysis. 
 
 This repo contains the following items: 
 
